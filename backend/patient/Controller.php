@@ -152,18 +152,18 @@ class PatientController {
                     $category = $pdo->getResult($catSql);
                     if($category[0]['cat_name'] == 'Return to Provider') {
                         if($rank == 1.5 || $rank == 1.4 || $rank == 1.3 || $rank == 1.2 || $rank == 1.1 || $rank == 1.0) {
-                            $sortable_html .= '<li class="ui-state-default desc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b style="color:red">' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close"><span aria-hidden="true">×</span></button></li>';
+                            $sortable_html .= '<li class="ui-state-default desc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b style="color:red">' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close" value="' . $value['icd_code'] . '"><span aria-hidden="true">×</span></button></li>';
                         }
                         else {
-                            $sortable_html .= '<li class="ui-state-default aesc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b style="color:red">' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close"><span aria-hidden="true">×</span></button></li>';
+                            $sortable_html .= '<li class="ui-state-default aesc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b style="color:red">' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close" value="' . $value['icd_code'] . '"><span aria-hidden="true">×</span></button></li>';
                         }
                     }
                     else {
                         if($rank == 1.5 || $rank == 1.4 || $rank == 1.3 || $rank == 1.2 || $rank == 1.1 || $rank == 1.0) {
-                            $sortable_html .= '<li class="ui-state-default desc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b>' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close"><span aria-hidden="true">×</span></button></li>';
+                            $sortable_html .= '<li class="ui-state-default desc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b>' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close" value="' . $value['icd_code'] . '"><span aria-hidden="true">×</span></button></li>';
                         }
                         else {
-                            $sortable_html .= '<li class="ui-state-default aesc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b>' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close"><span aria-hidden="true">×</span></button></li>';
+                            $sortable_html .= '<li class="ui-state-default aesc" data-cart-id="' . $value['icd_code'] . '" data-order="' . $rank . '"><b>' . $value['icd_code'] . ' - ' . $value['icd_desc'] . '</b>&nbsp;&nbsp;<button type="button" class="removeC close" aria-label="Close" value="' . $value['icd_code'] . '"><span aria-hidden="true">×</span></button></li>';
                         }         
                     }
                     $code .= "," . $value['icd_code'];

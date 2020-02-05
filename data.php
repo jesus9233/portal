@@ -195,6 +195,15 @@ if (isset($_REQUEST['action'])) {
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $activity_logs = $pdo->insert($query, [$username, $action]);
     }
+
+    if (isset($_POST['removeCode'])) {
+        $code = $_POST['removeCode'];
+        $username = $_SESSION['username'];
+        $action = $username." removed Code '".$code."'";
+        $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
+        $add_code = $pdo->insert($query, [$username, $action]);
+        echo json_encode($add_code);
+    }
 }
 
 function loadCodes() {

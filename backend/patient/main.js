@@ -3,7 +3,6 @@ $(document).ready(function () {
     var medicalRecord = $(this).data("medicalrecord");
     var patientname = $(this).data("patientname");
     var patient_id = $(this).data("id");
-    var code = "";
 
     $.ajax({
       url: siteurl + "backend/patient/Controller.php",
@@ -20,9 +19,6 @@ $(document).ready(function () {
         var lastname = data.data[0].lastname;
         var medicalrecord = data.data[0].medicalrecord;
         var hospital = data.data[0].hospital;
-
-        code = data.medicalrecordinput;
-        CreateRow(code);
 
         $("#firstname").val(firstname);
         $("#lastname").val(lastname);
@@ -77,19 +73,7 @@ $(document).ready(function () {
 
   });
 
-  function CreateRow(code) {
-    $(document).on("click", ".removeC", function () {
-      $.ajax({
-        url: siteurl + "backend/patient/getautocomplete.php",
-        type: "POST",
-        data: {
-          action: "removeCode",
-          removeCode: code
-        }
-      })
-    })
-  }
-  
+
   /**
    * Reset Code Rank
    */

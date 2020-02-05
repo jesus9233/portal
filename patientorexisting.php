@@ -978,6 +978,18 @@
         });
     });
 
+    $(document).on('click', '.removeC', function() {
+        var code = $(this).attr('value');
+        $.ajax({
+            url: siteurl + 'data.php',
+            type: "POST",
+            data: {
+              action: "removeCode",
+              removeCode: code
+            }
+        })
+    })
+
 
 </script>
 

@@ -107,11 +107,3 @@ if (isset($_POST['addCode'])) {
     echo json_encode($add_code);
 }
 
-if (isset($_POST['removeCode'])) {
-    $code = $_POST['removeCode'];
-    $username = $_SESSION['username'];
-    $action = $username." removed Code '".$code."'";
-    $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
-    $add_code = $pdo->insert($query, [$username, $action]);
-    echo json_encode($add_code);
-}
