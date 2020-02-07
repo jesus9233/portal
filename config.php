@@ -1,6 +1,6 @@
 <?php
 return [
-	'siteurl' => 'http://localhost/3points/portal/',
+	'siteurl' => 'http://localhost/3points/portal',
     'db' =>[
          'host' => 'localhost',
          'user' => 'root',

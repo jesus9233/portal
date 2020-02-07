@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 if (!isset($_SESSION['medicalrecord']) || empty($_SESSION['medicalrecord'])) {
-    header('location: ' . getLink('patientorexisting.php'));
+    header('location: ' . getLink('/patientorexisting.php'));
     exit;
 }
 
