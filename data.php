@@ -104,7 +104,7 @@ if (isset($_REQUEST['action'])) {
 
         // Add activity log
         $username = $_SESSION['username'];
-        $action = $username." viewed that name is '".$patientname."' and medical record is ".$medicalrecord;
+        $action = "User ".$username." viewed that name is '".$patientname."' and medical record is ".$medicalrecord;
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $activity_logs = $pdo->insert($query, [$username, $action]);
         $result = $pdo->getResult("SELECT p.*, q.title FROM patient_answers p INNER JOIN questions q ON (p.question_id = q.id) where medicalrecord = ?", [$medicalrecord]);
@@ -141,7 +141,7 @@ if (isset($_REQUEST['action'])) {
             $pdo->run('CREATE TABLE `activity_log` ( `id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(30) NOT NULL, `action` text, `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`) )');
         }
         $username = $_SESSION['username'];
-        $action = $username." Added SNF '".$snfsname."'";
+        $action = "User ".$username." added SNF '".$snfsname."'";
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $activity_logs = $pdo->insert($query, [$username, $action]);
         $query = "INSERT INTO snfs (name) VALUES ('$snfsname') ";
@@ -151,20 +151,7 @@ if (isset($_REQUEST['action'])) {
 
     if ($_REQUEST['action'] == 'insertDataUserSnf') {
         $userId	= $_POST['user_id'];
-        $snfsID  = $_POST['snfList'];
-        $user_name = $pdo->getResult("SELECT firstname, lastname FROM users where id = $userId");
-        $firstname = $user_name[0]['firstname'];
-        $lastname = $user_name[0]['lastname'];
-        $hospital_name = $pdo->getResult("SELECT name FROM snfs WHERE id=$snfsID");
-        try{
-            $existChk = $pdo->getResult('SELECT 1 FROM activity_log LIMIT 1');
-        } catch(Exception $e) {
-            $pdo->run('CREATE TABLE `activity_log` ( `id` INT NOT NULL AUTO_INCREMENT, `username` VARCHAR(30) NOT NULL, `action` text, `reg_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`) )');
-        }
-        $username = $_SESSION['username'];
-        $action = $username." Assigned User is '".$firstname." ".$lastname."'"." to SNF is '".$hospital_name."'";
-        $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
-        $activity_logs = $pdo->insert($query, [$username, $action]);
+        
         $checkQuery = $pdo->getResult("SELECT user_id FROM users_snfs WHERE user_id=$userId");
         $deleteArray = array();
         foreach ($checkQuery as $deletePreviousRecordAginstUserId){
@@ -191,15 +178,17 @@ if (isset($_REQUEST['action'])) {
         $patientname  = urldecode($_POST['patientname']);
         // Add activity log
         $username = $_SESSION['username'];
-        $action = $username." edit that name is '".$patientname."' and medical record is ".$medicalrecord;
+        $action = "User ".$username." edit patient that name is '".$patientname."' and medical record is ".$medicalrecord;
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $activity_logs = $pdo->insert($query, [$username, $action]);
     }
 
     if (isset($_POST['removeCode'])) {
         $code = $_POST['removeCode'];
+        $firstname = $_POST['firstName'];
+        $lastname = $_POST['lastName'];
         $username = $_SESSION['username'];
-        $action = $username." removed Code '".$code."'";
+        $action = "User ".$username." removed code ".$code." from patient '".$firstname." ".$lastname."'";
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $add_code = $pdo->insert($query, [$username, $action]);
         echo json_encode($add_code);

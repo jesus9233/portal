@@ -100,8 +100,9 @@ if (isset($_POST['itemID2'])) {
 
 if (isset($_POST['addCode'])) {
     $code = $_POST['addCode'];
+    $patient = $_POST['patientName'];
     $username = $_SESSION['username'];
-    $action = $username." added Code '".$code."'";
+    $action = "User ".$username." added code ".$code." to patient '".$patient."'";
     $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
     $add_code = $pdo->insert($query, [$username, $action]);
     echo json_encode($add_code);

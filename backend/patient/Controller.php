@@ -86,10 +86,10 @@ class PatientController {
         $patientname  = urldecode($_POST['patientname']);
 
         // Add activity log
-        $username = $_SESSION['username'];
-        $action = $username." edit that name is '".$patientname."' and medical record is ".$medicalrecord;
-        $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
-        $activity_logs = $pdo->insert($query, [$username, $action]);
+        // $username = $_SESSION['username'];
+        // $action = "User ".$username." edit patient that name is '".$patientname."' and medical record is ".$medicalrecord;
+        // $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
+        // $activity_logs = $pdo->insert($query, [$username, $action]);
 
 
 
@@ -192,6 +192,15 @@ class PatientController {
     }
     public static function savePatient($pdo, $pdo_connection)
     {
+        $patient_first = $_POST['firstname'];
+        $patient_last = $_POST['lastname'];
+        $medicalrecord = $_POST['medicalrecord'];
+        $username = $_SESSION['username'];
+        $action = "User ".$username." edit medicalrecord ".$medicalrecord." from patient '".$patient_first." ".$patient_last."'";
+        $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
+        $add_code = $pdo_connection->insert($query, [$username, $action]);
+        // echo json_encode($add_code);
+
         $check_medical_record = " SELECT * FROM patients WHERE medicalrecord = '" . $_POST['hospital'] . "' AND id != " . $_POST['id'] . " ";
         $code_result = $pdo_connection->getResult($check_medical_record);
         $totalScore   = 0;
@@ -263,6 +272,8 @@ class PatientController {
         } else {
             echo json_encode(array("status" => 0, "msg" => "Medical record already exist"));
         }
+
+        
         die;
     }
     
@@ -274,7 +285,7 @@ class PatientController {
 
         // // Add activity log
         $username = $_SESSION['username'];
-        $action = $username." deleted that name is '".$patientname."' and medical record is ".$medicalrecord;
+        $action = "User ".$username." deleted patient that name is '".$patientname."' and medical record is ".$medicalrecord;
         $query = "INSERT INTO activity_log (username, action) VALUES(?,?)";
         $activity_logs = $pdo_connection->insert($query, [$username, $action]);
 

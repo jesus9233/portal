@@ -258,7 +258,7 @@
                         </div>
                     </div>
                     <div class="md-form mt-0">
-                        <input class="form-control" id="materialRegisterFormHospital" name="medicalrecord" placeholder="Patient Medical Record" type="text" value="<?php echo $medicalrecord; ?>">
+                        <input class="form-control" id="materialRegisterFormRecord" name="medicalrecord" placeholder="Patient Medical Record" type="text" value="<?php echo $medicalrecord; ?>">
                     </div>
                     <!-- Hospital -->
                     <div class="md-form mt-0">
@@ -427,7 +427,7 @@
                 <div class="form-group" id="users">
                 </div>
                 <label class="setlabelSNF">Select SNF</label>
-                <input class="typeahead form-control" type="text" id="suggest" ria-label="Search SNF" placeholder="Search for Code" value="" name="suggest">
+                <input class="typeahead form-control" type="text" id="suggestss" ria-label="Search SNF" placeholder="Search for Code" value="" name="suggestss">
                 <input type="hidden" name="snfId" class="snfID[]" value="[]">
                 <br>
                 <ul id="ulcart" style="list-style-type:disc;">
@@ -475,6 +475,7 @@
                     $('#ulcart').append('');
                     $('#ulcart').html('');
                     snfs.map(function(cat_id) {
+                        if(cat_id[0]==undefined) return [];
                         $('.hidden-cat').val(cat_id[0].id);
                         catId.push(cat_id[0].id, cat_id[0].name);
                         $('#ulcart').append('<li class="list-unstyled item ui-state-default cartid_' +
@@ -513,7 +514,7 @@
 
     // Initialize the Bloodhound suggestion engine
     source2.initialize();
-    $('#suggest').typeahead(null, {
+    $('#suggestss').typeahead(null, {
         name: 'source1',
         display: 'name',
         highlight: true,
@@ -532,7 +533,7 @@
     var catId = [];
     var x = 1; //Initial field counter is 1
     var wrapper = $('.field_wrapper'); //Input field wrapper
-    $('#suggest').on('typeahead:selected', function(e, datum) {
+    $('#suggestss').on('typeahead:selected', function(e, datum) {
         // grab the hidden input value
         var datumConvert = JSON.stringify(datum);
         // if autocomplete contains description as well
@@ -567,6 +568,7 @@
                 user_id: userId
             },
             success: function(data) {
+                alert()
                 var dataa = JSON.parse(data);
                 if (dataa.success === false) {
                     toastr.error(dataa.message);
@@ -597,9 +599,6 @@
             type: 'POST',
             data: {
                 itemID2: hiddenID
-            },
-            success: function(data) {
-                addExtraFields();
             }
         })
     }) // === END Suggest === //
@@ -642,8 +641,7 @@
     });
 
     $(document).on('click', '.submitsnfsusers', function() {
-        //Validations
-        var code_list = '';
+        var code_list = ',';
         $('#ulcart li').each(function(i, obj) {
             var code_id = $(obj).attr('data-cart-id');
             code_list += code_id;
@@ -651,7 +649,6 @@
         if (code_list != "") {
             code_list = code_list.slice(1);
         }
-        // alert(code_list);
         let userId = $('#userName').val();
         if (userId === 0) {
             toastr.error('User must be selected');
@@ -980,12 +977,16 @@
 
     $(document).on('click', '.removeC', function() {
         var code = $(this).attr('value');
+        var firstname = $('#firstname').val();
+        var lastname = $('#lastname').val();
         $.ajax({
             url: siteurl + 'data.php',
             type: "POST",
             data: {
               action: "removeCode",
-              removeCode: code
+              removeCode: code,
+              firstName: firstname,
+              lastName: lastname
             }
         })
     })

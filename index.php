@@ -1,6 +1,7 @@
 <!doctype html>
 <?php
 include_once 'functions.php';
+
 session_start();
 // $feedbackdata = json_decode($_SESSION['feedbackdata']);
 if (!isset($_SESSION['username'])) {
@@ -164,7 +165,7 @@ if (isset($_GET['logout'])) {
                     <!-- Left -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link waves-effect" href="#">Home
+                            <a class="nav-link waves-effect" href="<?php echo getLink("patientorexisting.php") ?>">Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
@@ -198,7 +199,6 @@ if (isset($_GET['logout'])) {
     <main>
         <div class="container-fluid mt-5 pt-5">
             <div class="row">
-
 
                 <div class="offset-md-2 col-lg-7 col-md-7">
                     <?php flashMsg(); ?>
@@ -740,12 +740,15 @@ if (isset($_GET['logout'])) {
 
                 }
 
-                var addcode = $('.hidden-id').val()
+                var addcode = $('.hidden-id').val();
+                var patient = "<?php echo $_SESSION['patient_name']; ?>";
+
                 $.ajax({
                     url: siteurl + '/getautocomplete.php',
                     type: 'POST',
                     data: {
-                        addCode: addcode
+                        addCode: addcode,
+                        patientName: patient
                     }
                 })
             }); // === END addButton === //
