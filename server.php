@@ -85,7 +85,7 @@ if (isset($_POST['login_user'])) {
       $_SESSION['success'] = "You are now logged in";
       $users_snfs = $pdo->getResult("SELECT snfs.name,users_snfs.user_id,users_snfs.snf_id from snfs INNER JOIN users_snfs ON snfs.id = users_snfs.snf_id WHERE user_id=".$_SESSION['id']."");
       $_SESSION['hospital'] = $users_snfs[0]['name'];
-      $patientRedirectUrl = str_replace( [' ', '\"', '\''], "-", strtolower($_SESSION['hospital']) ) .'patientorexisting.php';
+      $patientRedirectUrl = str_replace( [' ', '\"', '\''], "-", strtolower($_SESSION['hospital']) ) .'/patientorexisting.php';
   	  header('location: '. getLink($patientRedirectUrl));
   	}else {
   		array_push($errors, "Wrong email/password combination");
